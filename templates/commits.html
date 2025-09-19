@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Métricas de Commits</h1>
+
+<div class="filters">
+    <input type="date" id="start_date" placeholder="Data início">
+    <input type="date" id="end_date" placeholder="Data fim">
+    <select id="repo">
+        <option value="">Todos os repositórios</option>
+    </select>
+    <button onclick="loadData()">Filtrar</button>
+    <button class="export-btn" onclick="exportData()">Exportar CSV</button>
+</div>
+
+<div class="chart-container">
+    <div id="commits-chart"></div>
+</div>
+
+<script>
+function loadData() {
+    const params = new URLSearchParams({
+        start_date: document.getElementById('start_date').value,
+        end_date: document.getElementById('end_date').value,
+        repo: document.getElementById('repo').value
+    });
+    
+    fetch(`/api/commits?${params}`)
+        .then(response => response.json())
+        .then(data => {
+            const chart = JSON.parse(data.chart);
+            Plotly.newPlot('commits-chart', chart.data, chart.layout);
+        });
+}
+
+function exportData() {
+    const params = new URLSearchParams({
+        start_date: document.getElementById('start_date').value,
+        end_date: document.getElementById('end_date').value,
+        repo: document.getElementById('repo').value
+    });
+    
+    window.open(`/export/commits?${params}`);
+}
+
+// Carregar dados iniciais
+loadData();
+</script>
+{% endblock %}

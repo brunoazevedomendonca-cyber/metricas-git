@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Dashboard de Métricas Git</h1>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+    <div>
+        <h3>Commits por Desenvolvedor</h3>
+        <div id="commits-summary"></div>
+    </div>
+    
+    <div>
+        <h3>Pull Requests</h3>
+        <div id="prs-summary"></div>
+    </div>
+</div>
+
+<script>
+// Carregar resumos
+fetch('/api/commits')
+    .then(response => response.json())
+    .then(data => {
+        const chart = JSON.parse(data.chart);
+        chart.layout.height = 300;
+        Plotly.newPlot('commits-summary', chart.data, chart.layout);
+    });
+
+fetch('/api/prs')
+    .then(response => response.json())
+    .then(data => {
+        const chart = JSON.parse(data.chart);
+        chart.layout.height = 300;
+        Plotly.newPlot('prs-summary', chart.data, chart.layout);
+    });
+</script>
+{% endblock %}

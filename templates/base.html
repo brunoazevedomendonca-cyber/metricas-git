@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Git Metrics Dashboard</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        nav { background: #f4f4f4; padding: 10px; margin-bottom: 20px; }
+        nav a { margin-right: 15px; text-decoration: none; color: #333; }
+        nav a:hover { color: #007bff; }
+        .filters { margin-bottom: 20px; padding: 15px; background: #f9f9f9; }
+        .filters input, .filters select { margin: 5px; padding: 5px; }
+        .chart-container { margin: 20px 0; }
+        .export-btn { background: #28a745; color: white; padding: 8px 16px; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/">Dashboard</a>
+        <a href="/commits">Commits</a>
+        <a href="/prs">Pull Requests</a>
+        <a href="/releases">Releases</a>
+    </nav>
+    
+    {% block content %}{% endblock %}
+</body>
+</html>
